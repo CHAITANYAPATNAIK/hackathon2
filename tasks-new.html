@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #004d99;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+            flex: 1;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav ul li {
+            margin-left: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ffdd57;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 120px;
+        }
+        section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        section h2, section h3 {
+            color: #004d99;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .task-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #e6f0ff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .task-item .task-details {
+            flex: 1;
+        }
+        .task-item button {
+            padding: 5px 10px;
+            border: none;
+            background-color: #ff4d4d;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+        .task-item button:hover {
+            background-color: #cc0000;
+        }
+        footer {
+            background-color: #004d99;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        #addTaskForm button {
+            padding: 10px;
+            border: none;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #addTaskForm button:hover {
+            background-color: #218838;
+        }
+        .hero {
+            background: url('img.jpg') no-repeat center center/cover;
+            color: #fff;
+            text-align: center;
+            padding: 250px 50px 100px;
+            position: relative;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            margin: 0;
+            font-size: 3em;
+            letter-spacing: 2px;
+        }
+        .hero p {
+            font-size: 1.2em;
+            margin: 20px 0 0;
+        }
+        .completed {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .priority-high {
+            border-left: 5px solid #cc0000;
+        }
+        .priority-medium {
+            border-left: 5px solid #ffcc00;
+        }
+        .priority-low {
+            border-left: 5px solid #28a745;
+        }
+        .priority-indicator {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    flex: 1;
+    text-align: center;
+    position: relative;
+    animation: moveTitle 1s linear infinite alternate;
+}
+
+@keyframes moveTitle {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 20px; /* Adjust this value to change the range */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Social Task Manager</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showHome()">Home</a></li>
+                    <li><a href="#" onclick="showTasks()">Tasks</a></li>
+                    <li><a href="#" onclick="showAddTaskForm()">Add Task</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Welcome to Social Task Manager</h1>
+            <p>Manage your tasks efficiently and effectively.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="home">
+            <h2>About Social Task Manager</h2>
+            <p>Social Task Manager is designed to help you manage your tasks efficiently and effectively. You can add, track, and complete tasks with ease. Set priorities for your tasks to ensure you focus on what matters most.</p>
+            <p>Our platform is user-friendly and helps you stay organized whether you are managing personal tasks or working in a team. Experience seamless task management and boost your productivity with Social Task Manager.</p>
+        </section>
+
+        <section id="tasks" style="display: none;">
+            <h2>Tasks</h2>
+            <section id="activeTasks">
+                <h3>Active Tasks</h3>
+                <div id="activeTaskList">
+                    <!-- Active tasks will be displayed here -->
+                </div>
+            </section>
+            <section id="completedTasks">
+                <h3>Completed Tasks</h3>
+                <div id="completedTaskList">
+                    <!-- Completed tasks will be displayed here -->
+                </div>
+            </section>
+        </section>
+
+        <section id="addTask" style="display: none;">
+            <h2>Add New Task</h2>
+            <form id="addTaskForm">
+                <div class="form-container">
+                    <input type="text" id="taskName" placeholder="Task Name" required>
+                    <input type="date" id="taskDate" required>
+                    <select id="taskPriority">
+                        <option value="high">High Priority (1)</option>
+                        <option value="medium">Medium Priority (2)</option>
+                        <option value="low">Low Priority (3)</option>
+                    </select>
+                    <button type="button" onclick="addTask()">Add Task</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Social Task Manager. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let tasks = [];
+
+        function showHome() {
+            document.getElementById('home').style.display = 'block';
+            document.getElementById('tasks').style.display = 'none';
+            document.getElementById('addTask').style.display = 'none';
+        }
+
+        function showAddTaskForm() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('tasks').style.display = 'none';
+            document.getElementById('addTask').style.display = 'block';
+        }
+
+        function showTasks() {
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('tasks').style.display = 'block';
+            document.getElementById('addTask').style.display = 'none';
+        }
+
+        function addTask() {
+            const name = document.getElementById('taskName').value;
+            const date = document.getElementById('taskDate').value;
+            const priority = document.getElementById('taskPriority').value;
+
+            if (!name || !date || !priority) {
+                alert('Please fill out all fields.');
+                return;
+            }
+
+            tasks.push({ name, date, priority, completed: false });
+            displayTasks();
+            document.getElementById('taskName').value = '';
+            document.getElementById('taskDate').value = '';
+            document.getElementById('taskPriority').value = 'medium';
+            showTasks();
+            alert('Task added successfully!');
+        }
+
+        function displayTasks() {
+            const activeTaskList = document.getElementById('activeTaskList');
+            const completedTaskList = document.getElementById('completedTaskList');
+            activeTaskList.innerHTML = '';
+            completedTaskList.innerHTML = '';
+
+            tasks.forEach((task, index) => {
+                const taskItem = document.createElement('div');
+                taskItem.className = `task-item ${task.completed ? 'completed' : ''} priority-${task.priority}`;
+                const taskDetails = document.createElement('div');
+                taskDetails.className = 'task-details';
+                const priorityNumber = task.priority === 'high' ? '1' : task.priority === 'medium' ? '2' : '3';
+                taskDetails.innerHTML = `
+                    <p><span class="priority-indicator">${priorityNumber}</span><strong>Name:</strong> ${task.name}</p>
+                    <p><strong>Date:</strong> ${task.date}</p>
+                    <p><strong>Priority:</strong> ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</p>
+                `;
+                const completeButton = document.createElement('button');
+                completeButton.textContent = task.completed ? 'Completed' : 'Complete';
+                completeButton.onclick = function() {
+                    completeTask(index);
+                };
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.onclick = function() {
+                    removeTask(index);
+                };
+                taskItem.appendChild(taskDetails);
+                taskItem.appendChild(completeButton);
+                taskItem.appendChild(removeButton);
+                if (task.completed) {
+                    completedTaskList.appendChild(taskItem);
+                } else {
+                    activeTaskList.appendChild(taskItem);
+                }
+            });
+        }
+
+        function completeTask(index) {
+            tasks[index].completed = true;
+            displayTasks();
+            alert('Task completed!');
+        }
+
+        function removeTask(index) {
+            tasks.splice(index, 1);
+            displayTasks();
+            alert('Task removed!');
+        }
+
+        // Initial display
+        showHome();
+    </script>
+</body>
+</html>
